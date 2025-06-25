@@ -60,7 +60,7 @@ public class CommandColorer implements IMessageFormatter, IJsonApplier, IScreenS
     public Optional<Text> format(Text text, @Nullable ParseResults<CommandSource> parse) {
         if (parse == null) {
             if (text.getString().charAt(0) == '/') {
-                return Optional.of(Text.literal(text.getString()).fillStyle(Style.EMPTY.withColor(CommandColorerStorage.ERROR_COLOR.config.get().color())));
+                return Optional.of(Text.literal(text.getString()).fillStyle(Style.EMPTY.withColor(CommandColorerStorage.ERROR_COLOR.config.getIntegerValue())));
             }
             return Optional.empty();
         }
@@ -99,7 +99,7 @@ public class CommandColorer implements IMessageFormatter, IJsonApplier, IScreenS
         if (lowest > -1) {
             replace.put(new StringMatch(text.getString().substring(0, lowest), 0, lowest), (current, match) -> {
                 if (current.getStyle().equals(Style.EMPTY)) {
-                    return Text.literal(match.match).fillStyle(Style.EMPTY.withColor(CommandColorerStorage.COMMAND_COLOR.config.get().color()));
+                    return Text.literal(match.match).fillStyle(Style.EMPTY.withColor(CommandColorerStorage.COMMAND_COLOR.config.getIntegerValue()));
                 }
                 return Text.literal(match.match).fillStyle(current.getStyle());
             });
@@ -108,7 +108,7 @@ public class CommandColorer implements IMessageFormatter, IJsonApplier, IScreenS
             replace.put(new StringMatch(text.getString().substring(max, string.length()), max, string.length()),
                     (current, match) -> {
                         if (current.getStyle().equals(Style.EMPTY)) {
-                            return Text.literal(match.match).fillStyle(Style.EMPTY.withColor(CommandColorerStorage.ERROR_COLOR.config.get().color()));
+                            return Text.literal(match.match).fillStyle(Style.EMPTY.withColor(CommandColorerStorage.ERROR_COLOR.config.getIntegerValue()));
                         }
                         return Text.literal(match.match).fillStyle(current.getStyle());
                     });

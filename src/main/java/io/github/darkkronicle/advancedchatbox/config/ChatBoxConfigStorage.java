@@ -14,6 +14,7 @@ import com.google.gson.JsonPrimitive;
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigHandler;
 import fi.dy.masa.malilib.config.options.ConfigBoolean;
+import fi.dy.masa.malilib.config.options.ConfigColor;
 import fi.dy.masa.malilib.config.options.ConfigInteger;
 import fi.dy.masa.malilib.config.options.ConfigString;
 import fi.dy.masa.malilib.util.FileUtils;
@@ -24,8 +25,7 @@ import io.github.darkkronicle.advancedchatbox.registry.ChatFormatterRegistry;
 import io.github.darkkronicle.advancedchatbox.registry.ChatSuggestorRegistry;
 import io.github.darkkronicle.advancedchatcore.config.ConfigStorage;
 import io.github.darkkronicle.advancedchatcore.config.SaveableConfig;
-import io.github.darkkronicle.advancedchatcore.config.options.ConfigColor;
-import io.github.darkkronicle.advancedchatcore.util.Color;
+
 import java.io.File;
 import java.util.List;
 import net.fabricmc.api.EnvType;
@@ -45,13 +45,13 @@ public class ChatBoxConfigStorage implements IConfigHandler {
 
         public static final SaveableConfig<ConfigColor> HIGHLIGHT_COLOR =
                 SaveableConfig.fromConfig("highlightColor", new ConfigColor(translate("highlightcolor"),
-                        new Color(255, 255, 0, 255), translate("info.highlightcolor")));
+                        "#FFFFFF00", translate("info.highlightcolor")));
         public static final SaveableConfig<ConfigColor> UNHIGHLIGHT_COLOR =
                 SaveableConfig.fromConfig("unhighlightColor", new ConfigColor(translate("unhighlightcolor"),
-                        new Color(170, 170, 170, 255), translate("info.unhighlightcolor")));
+                        "#FFAAAAAA", translate("info.unhighlightcolor")));
         public static final SaveableConfig<ConfigColor> BACKGROUND_COLOR =
                 SaveableConfig.fromConfig("backgroundColor", new ConfigColor(translate("backgroundcolor"),
-                        new Color(0, 0, 0, 170), translate("info.backgroundcolor")));
+                        "#AA000000", translate("info.backgroundcolor")));
         public static final SaveableConfig<ConfigInteger> SUGGESTION_SIZE = SaveableConfig.fromConfig("suggestionSize",
                 new ConfigInteger(translate("suggestionsize"), 10, 1, 50, translate("info.suggestionsize")));
         public static final SaveableConfig<ConfigBoolean> REMOVE_IDENTIFIER =
@@ -62,7 +62,7 @@ public class ChatBoxConfigStorage implements IConfigHandler {
                 new ConfigBoolean(translate("pruneplayersuggestions"), true, translate("info.pruneplayersuggestions")));
         public static final SaveableConfig<ConfigColor> AVAILABLE_SUGGESTION_COLOR = SaveableConfig
                 .fromConfig("availableSuggestionColor", new ConfigColor(translate("availablesuggestioncolor"),
-                        new Color(150, 150, 150, 255), translate("info.availablesuggestioncolor")));
+                        "#FF969696", translate("info.availablesuggestioncolor")));
 
         public static final ImmutableList<SaveableConfig<? extends IConfigBase>> OPTIONS =
                 ImmutableList.of(HIGHLIGHT_COLOR, UNHIGHLIGHT_COLOR, BACKGROUND_COLOR, SUGGESTION_SIZE,

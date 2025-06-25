@@ -9,7 +9,6 @@ package io.github.darkkronicle.advancedchatbox;
 
 import fi.dy.masa.malilib.config.ConfigManager;
 import fi.dy.masa.malilib.interfaces.IInitializationHandler;
-import fi.dy.masa.malilib.util.StringUtils;
 import io.github.darkkronicle.advancedchatbox.chat.ChatBoxSection;
 import io.github.darkkronicle.advancedchatbox.config.ChatBoxConfigStorage;
 import io.github.darkkronicle.advancedchatbox.config.GuiChatBoxConfig;
@@ -25,10 +24,8 @@ import io.github.darkkronicle.advancedchatbox.suggester.SpellCheckSuggestor;
 import io.github.darkkronicle.advancedchatcore.AdvancedChatCore;
 import io.github.darkkronicle.advancedchatcore.chat.ChatScreenSectionHolder;
 import io.github.darkkronicle.advancedchatcore.config.gui.GuiConfigHandler;
-import java.util.List;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screen.Screen;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 

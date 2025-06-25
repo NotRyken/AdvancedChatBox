@@ -84,7 +84,7 @@ public class ChatFormatter {
                     Style style = Style.EMPTY;
                     style = style.withFormatting(Formatting.UNDERLINE);
                     TextColor textColor = TextColor
-                            .fromRgb(ChatBoxConfigStorage.General.AVAILABLE_SUGGESTION_COLOR.config.get().color());
+                            .fromRgb(ChatBoxConfigStorage.General.AVAILABLE_SUGGESTION_COLOR.config.getIntegerValue());
                     style = style.withColor(textColor);
                     return Text.literal(matchString).fillStyle(style);
                 });

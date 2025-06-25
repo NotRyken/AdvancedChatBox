@@ -9,12 +9,10 @@ package io.github.darkkronicle.advancedchatbox.config;
 
 import com.google.common.collect.ImmutableList;
 import fi.dy.masa.malilib.config.IConfigBase;
+import fi.dy.masa.malilib.config.options.ConfigColor;
 import fi.dy.masa.malilib.config.options.ConfigString;
 import fi.dy.masa.malilib.util.StringUtils;
 import io.github.darkkronicle.advancedchatcore.config.SaveableConfig;
-import io.github.darkkronicle.advancedchatcore.config.options.ConfigColor;
-import io.github.darkkronicle.advancedchatcore.config.options.ConfigColor;
-import io.github.darkkronicle.advancedchatcore.util.Color;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -28,10 +26,10 @@ public class CommandColorerStorage {
     public static final String NAME = "commandcolorer";
 
     public static final SaveableConfig<ConfigColor> COMMAND_COLOR = SaveableConfig.fromConfig("commandColor",
-            new ConfigColor(translate("commandcolor"), new Color(180, 180, 180, 255), translate("info.commandcolor")));
+            new ConfigColor(translate("commandcolor"), "#FFB4B4B4", translate("info.commandcolor")));
 
     public static final SaveableConfig<ConfigColor> ERROR_COLOR = SaveableConfig.fromConfig("errorColor",
-            new ConfigColor(translate("errorcolor"), new Color(255, 60, 60, 255), translate("info.errorcolor")));
+            new ConfigColor(translate("errorcolor"), "#FF3C3CFF", translate("info.errorcolor")));
 
     public static final SaveableConfig<ConfigString> DEFAULT_PALETTE = SaveableConfig.fromConfig("defaultPalette",
             new ConfigString(translate("defaultpalette"), "pastel_rgb", translate("info.defaultpalette")));
