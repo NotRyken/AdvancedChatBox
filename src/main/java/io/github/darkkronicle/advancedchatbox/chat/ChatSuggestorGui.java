@@ -31,6 +31,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Rect2i;
@@ -180,7 +181,7 @@ public class ChatSuggestorGui {
             if (this.suggestor.getSuggestions().isEmpty() && !this.suggestor.getParse().getExceptions().isEmpty()) {
                 int builtInExceptions = 0;
 
-                for (Map.Entry<CommandNode<CommandSource>, CommandSyntaxException> commandNodeCommandSyntaxExceptionEntry : this.suggestor
+                for (Map.Entry<CommandNode<ClientCommandSource>, CommandSyntaxException> commandNodeCommandSyntaxExceptionEntry : this.suggestor
                         .getParse().getExceptions().entrySet()) {
                     CommandSyntaxException commandSyntaxException = commandNodeCommandSyntaxExceptionEntry.getValue();
                     if (commandSyntaxException.getType() == CommandSyntaxException.BUILT_IN_EXCEPTIONS
@@ -211,16 +212,16 @@ public class ChatSuggestorGui {
     }
 
     private void showUsages(Formatting formatting) {
-        CommandContextBuilder<CommandSource> commandContextBuilder = this.suggestor.getParse().getContext();
-        SuggestionContext<CommandSource> suggestionContext =
+        CommandContextBuilder<ClientCommandSource> commandContextBuilder = this.suggestor.getParse().getContext();
+        SuggestionContext<ClientCommandSource> suggestionContext =
                 commandContextBuilder.findSuggestionContext(this.textField.getCursor());
-        Map<CommandNode<CommandSource>, String> map = this.client.player.networkHandler.getCommandDispatcher()
+        Map<CommandNode<ClientCommandSource>, String> map = this.client.player.networkHandler.getCommandDispatcher()
                 .getSmartUsage(suggestionContext.parent, this.client.player.networkHandler.getCommandSource());
         List<OrderedText> list = new ArrayList<>();
         int i = 0;
         Style style = Style.EMPTY.withColor(formatting);
 
-        for (Map.Entry<CommandNode<CommandSource>, String> commandNodeStringEntry : map.entrySet()) {
+        for (Map.Entry<CommandNode<ClientCommandSource>, String> commandNodeStringEntry : map.entrySet()) {
             if (!(commandNodeStringEntry.getKey() instanceof LiteralCommandNode)) {
                 list.add(OrderedText.styledForwardsVisitedString(commandNodeStringEntry.getValue(), style));
                 i = Math.max(i, this.textRenderer.getWidth(commandNodeStringEntry.getValue()));
@@ -467,15 +468,15 @@ public class ChatSuggestorGui {
             this.completed = true;
         }
 
-        private String getNarration() {
+        private Text getNarration() {
             this.lastNarrationIndex = this.selection;
             Suggestion suggestion = this.suggestions.get(this.selection);
             Message message = suggestion.getTooltip();
-            return message != null
+            return Text.literal(message != null
                     ? I18n.translate("narration.suggestion.tooltip", this.selection + 1, this.suggestions.size(),
                             suggestion.getText(), message.getString())
                     : I18n.translate("narration.suggestion", this.selection + 1, this.suggestions.size(),
-                            suggestion.getText());
+                            suggestion.getText()));
         }
 
         public void discard() {

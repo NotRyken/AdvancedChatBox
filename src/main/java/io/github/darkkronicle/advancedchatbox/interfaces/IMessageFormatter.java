@@ -10,6 +10,8 @@ package io.github.darkkronicle.advancedchatbox.interfaces;
 import com.mojang.brigadier.ParseResults;
 import java.util.Optional;
 import javax.annotation.Nullable;
+
+import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.Text;
 
@@ -22,5 +24,5 @@ public interface IMessageFormatter {
      * @param parse Current commands that have been parsed
      * @return Text that should render on the chat text bar. If empty it won't modify.
      */
-    Optional<Text> format(Text text, @Nullable ParseResults<CommandSource> parse);
+    Optional<Text> format(Text text, @Nullable ParseResults<ClientCommandSource> parse);
 }

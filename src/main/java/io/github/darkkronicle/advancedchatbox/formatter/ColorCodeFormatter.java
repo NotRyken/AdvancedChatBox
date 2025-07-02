@@ -16,6 +16,7 @@ import javax.annotation.Nullable;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
@@ -26,7 +27,7 @@ import net.minecraft.util.Formatting;
 public class ColorCodeFormatter implements IMessageFormatter {
 
     @Override
-    public Optional<Text> format(Text text, @Nullable ParseResults<CommandSource> parse) {
+    public Optional<Text> format(Text text, @Nullable ParseResults<ClientCommandSource> parse) {
         if (parse != null) {
             return Optional.empty();
         }

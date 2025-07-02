@@ -93,7 +93,4 @@ public class ShortcutEntryListWidget extends WidgetConfigListEntry<ShortcutSugge
 
         return button.getWidth() + 1;
     }
-
-    @Override
-    public void renderEntry(int mouseX, int mouseY, boolean selected, DrawContext context) {}
 }

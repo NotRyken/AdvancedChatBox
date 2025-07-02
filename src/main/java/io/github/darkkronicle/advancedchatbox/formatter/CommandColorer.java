@@ -39,6 +39,7 @@ import javax.annotation.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -57,14 +58,14 @@ public class CommandColorer implements IMessageFormatter, IJsonApplier, IScreenS
     }
 
     @Override
-    public Optional<Text> format(Text text, @Nullable ParseResults<CommandSource> parse) {
+    public Optional<Text> format(Text text, @Nullable ParseResults<ClientCommandSource> parse) {
         if (parse == null) {
             if (text.getString().charAt(0) == '/') {
                 return Optional.of(Text.literal(text.getString()).fillStyle(Style.EMPTY.withColor(CommandColorerStorage.ERROR_COLOR.config.getIntegerValue())));
             }
             return Optional.empty();
         }
-        CommandContextBuilder<CommandSource> commandContextBuilder = parse.getContext().getLastChild();
+        CommandContextBuilder<ClientCommandSource> commandContextBuilder = parse.getContext().getLastChild();
         HashMap<StringMatch, StringInsert> replace = new HashMap<>();
         int lowest = -1;
         int max = 0;
@@ -118,39 +119,39 @@ public class CommandColorer implements IMessageFormatter, IJsonApplier, IScreenS
         return Optional.of(text);
     }
 
-    private List<CommandSection<?>> compileObjects(ParseResults<CommandSource> parse, String input) {
-        CommandContextBuilder<CommandSource> commandContextBuilder = parse.getContext();
+    private List<CommandSection<?>> compileObjects(ParseResults<ClientCommandSource> parse, String input) {
+        CommandContextBuilder<ClientCommandSource> commandContextBuilder = parse.getContext();
         List<CommandSection<?>> sections = new ArrayList<>();
-        for (CommandContextBuilder<CommandSource> child : getAllChildren(commandContextBuilder)) {
+        for (CommandContextBuilder<ClientCommandSource> child : getAllChildren(commandContextBuilder)) {
             sections.addAll(addSubs(child, input));
             sections.addAll(addArgs(child, input));
         }
         return sections;
     }
 
-    private List<CommandSection<ParsedCommandNode<CommandSource>>> addSubs(CommandContextBuilder<CommandSource> context,
+    private List<CommandSection<ParsedCommandNode<ClientCommandSource>>> addSubs(CommandContextBuilder<ClientCommandSource> context,
             String input) {
-        List<CommandSection<ParsedCommandNode<CommandSource>>> nodes = new ArrayList<>();
-        for (ParsedCommandNode<CommandSource> node : context.getNodes()) {
+        List<CommandSection<ParsedCommandNode<ClientCommandSource>>> nodes = new ArrayList<>();
+        for (ParsedCommandNode<ClientCommandSource> node : context.getNodes()) {
             nodes.add(new CommandSection<>(node, fromRange(node.getRange(), input), CommandSection.Section.COMMAND));
         }
         return nodes;
     }
 
-    private List<CommandSection<ParsedArgument<CommandSource, ?>>> addArgs(CommandContextBuilder<CommandSource> context,
+    private List<CommandSection<ParsedArgument<ClientCommandSource, ?>>> addArgs(CommandContextBuilder<ClientCommandSource> context,
             String input) {
-        List<CommandSection<ParsedArgument<CommandSource, ?>>> nodes = new ArrayList<>();
+        List<CommandSection<ParsedArgument<ClientCommandSource, ?>>> nodes = new ArrayList<>();
         if (context.getArguments() == null) {
             return nodes;
         }
-        for (ParsedArgument<CommandSource, ?> node : context.getArguments().values()) {
+        for (ParsedArgument<ClientCommandSource, ?> node : context.getArguments().values()) {
             nodes.add(new CommandSection<>(node, fromRange(node.getRange(), input), CommandSection.Section.ARGUMENT));
         }
         return nodes;
     }
 
-    private List<CommandContextBuilder<CommandSource>> getAllChildren(CommandContextBuilder<CommandSource> context) {
-        List<CommandContextBuilder<CommandSource>> children = new ArrayList<>();
+    private List<CommandContextBuilder<ClientCommandSource>> getAllChildren(CommandContextBuilder<ClientCommandSource> context) {
+        List<CommandContextBuilder<ClientCommandSource>> children = new ArrayList<>();
         while (context != null) {
             children.add(context);
             context = context.getChild();

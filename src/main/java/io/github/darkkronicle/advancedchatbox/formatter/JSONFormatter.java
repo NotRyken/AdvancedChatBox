@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Value;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
@@ -61,7 +62,7 @@ public class JSONFormatter implements IMessageFormatter {
     }
 
     @Override
-    public Optional<Text> format(Text text, @Nullable ParseResults<CommandSource> parse) {
+    public Optional<Text> format(Text text, @Nullable ParseResults<ClientCommandSource> parse) {
         String content = text.getString();
         Optional<List<StringMatch>> omatches = SearchUtils.findMatches(content, "\\{.+\\}", FindType.REGEX);
         if (!omatches.isPresent()) {
