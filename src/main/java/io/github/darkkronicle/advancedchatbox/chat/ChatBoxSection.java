@@ -13,7 +13,9 @@ import io.github.darkkronicle.advancedchatcore.interfaces.AdvancedChatScreenSect
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.client.util.math.MatrixStack;
 
 @Environment(EnvType.CLIENT)
@@ -31,8 +33,8 @@ public class ChatBoxSection extends AdvancedChatScreenSection {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        return this.suggestor.keyPressed(keyCode, scanCode, modifiers);
+    public boolean keyPressed(KeyInput input) {
+        return this.suggestor.keyPressed(input);
     }
 
     @Override
@@ -51,8 +53,8 @@ public class ChatBoxSection extends AdvancedChatScreenSection {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        return this.suggestor.mouseClicked(mouseX, mouseY, button);
+    public boolean mouseClicked(Click click, boolean doubled) {
+        return this.suggestor.mouseClicked(click, doubled);
     }
 
     @Override

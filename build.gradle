@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.10.5'
+	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 	id 'io.freefair.lombok' version '8.10'
 }
@@ -25,6 +25,7 @@ repositories {
 			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
 		}
 	}
+    maven { url 'https://maven.fallenbreath.me/releases' }
 }
 
 dependencies {

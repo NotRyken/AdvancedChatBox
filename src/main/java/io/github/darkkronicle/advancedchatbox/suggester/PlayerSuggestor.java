@@ -44,7 +44,7 @@ public class PlayerSuggestor implements IMessageSuggestor {
         for (PlayerListEntry playerListEntry : MinecraftClient.getInstance().player.networkHandler.getPlayerList()) {
 
             //checking if player name is empty, to avoid fake players
-            if (playerListEntry.getProfile().getName().equals("")) continue;
+            if (playerListEntry.getProfile().name().equals("")) continue;
 
             if (ChatBoxConfigStorage.General.PRUNE_PLAYER_SUGGESTIONS.config.getBooleanValue()
                     && playerListEntry.getDisplayName() != null) {
@@ -67,7 +67,7 @@ public class PlayerSuggestor implements IMessageSuggestor {
             } else {
                 // Player name is never null. But on servers it can be populated with
                 // fake players.
-                list.add(playerListEntry.getProfile().getName());
+                list.add(playerListEntry.getProfile().name());
             }
         }
 

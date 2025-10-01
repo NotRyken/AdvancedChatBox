@@ -97,7 +97,7 @@ public class ChatBoxConfigStorage implements IConfigHandler {
 
     public static void loadFromFile() {
         File configFile =
-                FileUtils.getConfigDirectory().toPath().resolve("advancedchat").resolve(CONFIG_FILE_NAME).toFile();
+                FileUtils.getConfigDirectoryAsPath().resolve("advancedchat").resolve(CONFIG_FILE_NAME).toFile();
 
         if (configFile.exists() && configFile.isFile() && configFile.canRead()) {
             JsonElement element = ConfigStorage.parseJsonFile(configFile);
@@ -117,7 +117,7 @@ public class ChatBoxConfigStorage implements IConfigHandler {
     }
 
     public static void saveFromFile() {
-        File dir = FileUtils.getConfigDirectory().toPath().resolve("advancedchat").toFile();
+        File dir = FileUtils.getConfigDirectoryAsPath().resolve("advancedchat").toFile();
 
         if ((dir.exists() && dir.isDirectory()) || dir.mkdirs()) {
             JsonObject root = new JsonObject();

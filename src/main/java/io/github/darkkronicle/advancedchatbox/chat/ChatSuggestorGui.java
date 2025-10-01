@@ -24,13 +24,16 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import io.github.darkkronicle.advancedchatcore.util.Colors;
+import io.github.darkkronicle.advancedchatcore.util.ModifierKeyUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
@@ -81,7 +84,6 @@ public class ChatSuggestorGui {
         this.chatScreenSized = chatScreenSized;
         this.suggestor = new ChatSuggestor(textField);
         this.formatter = new ChatFormatter(textField, suggestor);
-        this.textField.setRenderTextProvider(this::provideRenderText);
     }
 
     public void setWindowActive(boolean windowActive) {
@@ -91,11 +93,11 @@ public class ChatSuggestorGui {
         }
     }
 
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (this.window != null && this.window.keyPressed(keyCode, scanCode, modifiers)) {
+    public boolean keyPressed(KeyInput input) {
+        if (this.window != null && this.window.keyPressed(input)) {
             return true;
         }
-        if (this.owner.getFocused() == this.textField && keyCode == KeyCodes.KEY_TAB) {
+        if (this.owner.getFocused() == this.textField && input.key() == KeyCodes.KEY_TAB) {
             this.showSuggestions(true);
             return true;
         }
@@ -106,8 +108,8 @@ public class ChatSuggestorGui {
         return (this.window != null && this.window.mouseScrolled(MathHelper.clamp(amount, -1.0D, 1.0D)));
     }
 
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        return (this.window != null && this.window.mouseClicked((int) mouseX, (int) mouseY, button));
+    public boolean mouseClicked(Click click, boolean doubled) {
+        return (this.window != null && this.window.mouseClicked((int) click.x(), (int) click.y(), click.button()));
     }
 
     public void showSuggestions(boolean narrateFirstSuggestion) {
@@ -394,26 +396,26 @@ public class ChatSuggestorGui {
             return false;
         }
 
-        public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-            if (keyCode == KeyCodes.KEY_UP) {
+        public boolean keyPressed(KeyInput input) {
+            if (input.key() == KeyCodes.KEY_UP) {
                 this.scroll(-1);
                 this.completed = false;
                 return true;
             }
-            if (keyCode == KeyCodes.KEY_DOWN) {
+            if (input.key() == KeyCodes.KEY_DOWN) {
                 this.scroll(1);
                 this.completed = false;
                 return true;
             }
-            if (keyCode == KeyCodes.KEY_TAB) {
+            if (input.key() == KeyCodes.KEY_TAB) {
                 if (this.completed) {
-                    this.scroll(Screen.hasShiftDown() ? -1 : 1);
+                    this.scroll(ModifierKeyUtil.hasShiftDown() ? -1 : 1);
                 }
 
                 this.complete();
                 return true;
             }
-            if (keyCode == KeyCodes.KEY_ESCAPE) {
+            if (input.key() == KeyCodes.KEY_ESCAPE) {
                 this.discard();
                 return true;
             }
